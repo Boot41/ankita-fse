@@ -108,11 +108,26 @@ Desktop.ini
 # Project specific
 backend/static/
 backend/media/
-backend/insurance/migrations/*.py
-!backend/insurance/migrations/__init__.py
+backend/api/migrations/*.py
+!backend/api/migrations/__init__.py
+backend/test_logs/
 backend/db.sqlite3
 backend/.env
 frontend/.env
+
+# Development files
+*.dev.js
+*.dev.css
+*.hot-update.*
+
+# Backup files
+*.bak.*
+*~*
+._*
+
+# Local development settings
+backend/backend/settings_local.py
+backend/backend/settings_dev.py
 
 # Temporary files
 *.dump
