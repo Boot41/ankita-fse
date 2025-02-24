@@ -8,16 +8,30 @@ from django.core.cache import cache
 from typing import Any, Dict, List
 from decimal import Decimal
 
-from .models import CustomUser, InsurancePlan, Feedback, PlanComparison, UserDashboardPreference
+from .models import User, InsurancePlan, Feedback, PlanComparison, UserDashboardPreference
 from .serializers import (UserSerializer, InsurancePlanSerializer, FeedbackSerializer,
                         PlanComparisonSerializer, UserDashboardPreferenceSerializer)
 from gemini_client import get_insurance_recommendation, analyze_insurance_plan
 
+from rest_framework.permissions import AllowAny
+
 class UserViewSet(viewsets.ModelViewSet):
     """ViewSet for User registration and management."""
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+    
+    def get_permissions(self):
+        """Allow registration without authentication."""
+        if self.action == 'create':
+            return [AllowAny()]
+        return super().get_permissions()
+
+    @action(detail=False, methods=['get'])
+    def me(self, request):
+        """Get the current user's details."""
+        serializer = self.get_serializer(request.user)
+        return Response(serializer.data)
     
     @action(detail=True, methods=['post'])
     def get_ai_recommendation(self, request, pk=None):
@@ -107,7 +121,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
     
-    def _calculate_suitability_score(self, plan: InsurancePlan, user: CustomUser) -> float:
+    def _calculate_suitability_score(self, plan: InsurancePlan, user: User) -> float:
         """Calculate how suitable a plan is for a user (0-1 score)."""
         score = 1.0
         

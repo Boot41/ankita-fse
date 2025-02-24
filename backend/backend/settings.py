@@ -28,9 +28,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6(bgnyh#!7m6g%%$sh4a_hq%93n#6dov)0r_=grjdxn()0mr30'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+# CORS settings
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',  # Vite dev server
+    'http://127.0.0.1:5173',
+    'http://localhost:5174',  # Current frontend port
+    'http://127.0.0.1:5174',
+    'http://localhost:5179',  # Additional frontend port
+    'http://127.0.0.1:5179',
+]
+CORS_ALLOW_CREDENTIALS = True
 
 # Gemini API Configuration
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
@@ -72,14 +83,24 @@ REST_FRAMEWORK = {
     ],
 }
 
+# JWT settings
+from datetime import timedelta
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
+
 # CORS settings
-CORS_ALLOW_ALL_ORIGINS = True  # For development only, configure properly in production
+# Using CORS_ALLOWED_ORIGINS instead of CORS_ALLOW_ALL_ORIGINS for better security
 
 # Gemini API settings
 GEMINI_API_KEY = 'AIzaSyBPYsYUWOkKhTjG2fNBPK4cbOqOf07QwxE'
 
 # Custom user model
-AUTH_USER_MODEL = 'insurance.CustomUser'
+AUTH_USER_MODEL = 'insurance.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -118,12 +139,8 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'health_insurance',
-        'USER': 'postgres',
-        'PASSWORD': 'ankita',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -168,3 +185,15 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Frontend URL for password reset links
+FRONTEND_URL = 'http://localhost:5173'
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # For development
+DEFAULT_FROM_EMAIL = 'noreply@healthinsurance.com'
+EMAIL_HOST = 'smtp.gmail.com'  # Update with your SMTP server
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = ''  # Add your email
+EMAIL_HOST_PASSWORD = ''  # Add your email password or app-specific password

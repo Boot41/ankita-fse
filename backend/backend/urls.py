@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.views.generic import RedirectView
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from insurance.password_reset import request_password_reset, reset_password
 from rest_framework.documentation import include_docs_urls
 from insurance.views import (UserViewSet, InsurancePlanViewSet, FeedbackViewSet,
                           PlanComparisonViewSet, UserDashboardPreferenceViewSet)
@@ -40,5 +41,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/password-reset/', request_password_reset, name='password_reset'),
+    path('api/password-reset/confirm/', reset_password, name='password_reset_confirm'),
     path('api-auth/', include('rest_framework.urls')),  # Adds login to browsable API
 ]

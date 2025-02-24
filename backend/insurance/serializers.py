@@ -1,28 +1,32 @@
 from rest_framework import serializers
-from .models import (CustomUser, InsurancePlan, Feedback, Recommendation,
+from .models import (User, InsurancePlan, Feedback, Recommendation,
                     PlanComparison, UserDashboardPreference)
 from typing import Dict, Any
 
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for the User model."""
     password = serializers.CharField(write_only=True)
+    name = serializers.CharField(required=True)
 
     class Meta:
-        model = CustomUser
-        fields = ['id', 'username', 'email', 'password', 'first_name', 'last_name',
-                 'age', 'budget', 'family_size', 'medical_history', 'medical_conditions',
-                 'preferred_hospital_network', 'is_profile_complete', 'dark_mode_enabled',
+        model = User
+        fields = ['id', 'username', 'email', 'password', 'name',
+                 'age', 'budget', 'family_size', 'medical_history',
                  'created_at']
-        read_only_fields = ['created_at', 'is_profile_complete']
+        read_only_fields = ['created_at']
 
-    def create(self, validated_data: Dict[str, Any]) -> CustomUser:
+    def create(self, validated_data: Dict[str, Any]) -> User:
         """Create and return a new user with encrypted password."""
-        user = CustomUser.objects.create_user(
+        name_parts = validated_data.pop('name', '').split(' ', 1)
+        first_name = name_parts[0]
+        last_name = name_parts[1] if len(name_parts) > 1 else ''
+
+        user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data.get('email', ''),
             password=validated_data['password'],
-            first_name=validated_data.get('first_name', ''),
-            last_name=validated_data.get('last_name', ''),
+            first_name=first_name,
+            last_name=last_name,
             age=validated_data.get('age'),
             budget=validated_data.get('budget'),
             family_size=validated_data.get('family_size'),
