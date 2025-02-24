@@ -192,7 +192,6 @@ class InsurancePlanViewSet(viewsets.ModelViewSet):
             price_range = Decimal('100.00')
             
             similar_plans = InsurancePlan.objects.filter(
-                is_active=True,
                 monthly_premium__gte=plan.monthly_premium - price_range,
                 monthly_premium__lte=plan.monthly_premium + price_range
             ).exclude(id=plan.id)[:5]
@@ -243,7 +242,7 @@ class FeedbackViewSet(viewsets.ModelViewSet):
         """Filter queryset based on user permissions."""
         if self.request.user.is_staff:
             return Feedback.objects.all()
-        return Feedback.objects.filter(user=self.request.user)
+        return Feedback.objects.filter(user=self.request.user).order_by('-created_at')
     
     def perform_create(self, serializer):
         """Associate feedback with the current user."""

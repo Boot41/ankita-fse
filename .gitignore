@@ -108,9 +108,23 @@ Desktop.ini
 # Project specific
 backend/static/
 backend/media/
+backend/insurance/migrations/*.py
+!backend/insurance/migrations/__init__.py
+backend/db.sqlite3
+backend/.env
+frontend/.env
+
+# Temporary files
 *.dump
 *.sql
 *.gz
 *.zip
 *.tar
 *.rar
+
+# API Keys and Secrets
+**/secrets.json
+**/credentials.json
+**/.env.local
+**/.env.development
+**/.env.production

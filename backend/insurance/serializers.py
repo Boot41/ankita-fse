@@ -40,9 +40,8 @@ class InsurancePlanSerializer(serializers.ModelSerializer):
         model = InsurancePlan
         fields = ['id', 'name', 'plan_type', 'provider', 'description', 'coverage_details',
                  'eligibility_criteria', 'monthly_premium', 'deductible', 'copay',
-                 'max_coverage', 'network_hospitals', 'features', 'is_active',
-                 'popularity_score', 'created_at']
-        read_only_fields = ['created_at', 'popularity_score']
+                 'max_coverage', 'network_hospitals', 'created_at']
+        read_only_fields = ['created_at']
 
 class RecommendationSerializer(serializers.ModelSerializer):
     """Serializer for the Recommendation model."""

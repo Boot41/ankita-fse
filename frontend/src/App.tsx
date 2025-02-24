@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Shield } from 'lucide-react';
 import Navbar from './components/Navbar';
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Plans from './pages/Plans';
 import Dashboard from './pages/Dashboard';
@@ -16,9 +17,9 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/plans" element={<Plans />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/compare" element={<Compare />} />
+          <Route path="/plans" element={<ProtectedRoute><Plans /></ProtectedRoute>} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/compare" element={<ProtectedRoute><Compare /></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
