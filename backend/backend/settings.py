@@ -69,7 +69,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     
     # Local apps
-    'insurance.apps.InsuranceConfig',
+    'api.apps.ApiConfig',
 ]
 
 # REST Framework settings
@@ -106,7 +106,7 @@ SIMPLE_JWT = {
 GEMINI_API_KEY = 'AIzaSyBPYsYUWOkKhTjG2fNBPK4cbOqOf07QwxE'
 
 # Custom user model
-AUTH_USER_MODEL = 'insurance.User'
+AUTH_USER_MODEL = 'api.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
