@@ -1,5 +1,5 @@
-import React from 'react';
-import { ArrowRight, Shield, Heart, Users, CheckCircle, Star, Clock, Globe } from 'lucide-react';
+
+import { ArrowRight, Shield, Heart, Star, Clock, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Home = () => {

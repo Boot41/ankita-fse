@@ -54,7 +54,7 @@ const Dashboard = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div data-testid="loading-spinner" className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
@@ -124,8 +124,9 @@ const Dashboard = () => {
             </div>
             <form onSubmit={handleFeedbackSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Rating</label>
+                <label htmlFor="rating" className="block text-sm font-medium text-gray-700">Rating</label>
                 <select
+                  id="rating"
                   value={rating}
                   onChange={(e) => setRating(Number(e.target.value))}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
@@ -136,8 +137,9 @@ const Dashboard = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Comments</label>
+                <label htmlFor="comments" className="block text-sm font-medium text-gray-700">Comments</label>
                 <textarea
+                  id="comments"
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
                   rows={3}

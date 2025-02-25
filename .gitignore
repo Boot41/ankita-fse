@@ -143,3 +143,45 @@ backend/backend/settings_dev.py
 **/.env.local
 **/.env.development
 **/.env.production
+**/.env.*
+**/config.json
+
+# Frontend specific
+# Vite
+.vite/
+*.timestamp-*
+/src/auto-imports.d.ts
+/src/components.d.ts
+
+# TypeScript
+*.tsbuildinfo
+.tscache/
+tsconfig.tsbuildinfo
+
+# Test coverage
+/coverage/
+/.nyc_output/
+/cypress/videos/
+/cypress/screenshots/
+
+# Django specific
+migrations/*.py
+!migrations/__init__.py
+celerybeat-schedule
+celerybeat.pid
+django.log.*
+.pytest_cache/
+pytest.xml
+.mypy_cache/
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+*.sql
+
+# Dependencies
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
+poetry.lock

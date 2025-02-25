@@ -148,9 +148,9 @@ const Compare = () => {
                   {Object.entries(plan.features).map(([feature, included]) => (
                     <div key={feature} className="p-6 border-b flex justify-center">
                       {included ? (
-                        <Check className="h-6 w-6 text-green-500" />
+                        <Check data-testid="feature-included" className="h-6 w-6 text-green-500" />
                       ) : (
-                        <X className="h-6 w-6 text-red-500" />
+                        <X data-testid="feature-not-included" className="h-6 w-6 text-red-500" />
                       )}
                     </div>
                   ))}

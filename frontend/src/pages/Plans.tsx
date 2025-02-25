@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Shield, Check } from 'lucide-react';
 
 const Plans = () => {
-  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
 
   const plans = [
     {
