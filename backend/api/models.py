@@ -35,6 +35,7 @@ class Feedback(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.IntegerField()
     comments = models.TextField(blank=True)
+    summary = models.TextField(blank=True, help_text='AI-generated summary of the feedback')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -43,7 +44,8 @@ class Feedback(models.Model):
     def __str__(self) -> str:
         return f"{self.user.username}'s feedback - {self.rating} stars"
 
-    @property
-    def summary(self) -> str:
-        """Get a brief summary of the feedback."""
+    def get_summary(self) -> str:
+        """Get the AI-generated summary or a default summary if not available."""
+        if self.summary:
+            return self.summary
         return f"{self.rating} stars - {self.comments[:50]}..."

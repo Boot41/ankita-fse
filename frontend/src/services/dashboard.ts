@@ -58,7 +58,7 @@ export const getDashboardData = async (): Promise<DashboardData> => {
 
     // Get recommendations
     const recommendationsResponse = await axios.get(`${API_URL}recommendations/`);
-    const recommendations = recommendationsResponse.data;
+    const recommendations = recommendationsResponse.data.recommended_plans || [];
 
     // Get user feedback
     const feedbackResponse = await axios.get(`${API_URL}feedback/`);
